@@ -14,7 +14,7 @@ Para instalar y configurar el proyecto localmente, sigue estos pasos:
 1. Clona el repositorio:
 
    ```bash
-   git clone https://github.com/d4lion/Reto-Amadeus-Grupo-1.git
+    git clone https://github.com/LozanoAndersonTheStain/Front-Reto-Amadeus-Grupo-3.git
    ```
 
 2. Navega al directorio del proyecto:
