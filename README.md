@@ -20,7 +20,7 @@ Para instalar y configurar el proyecto localmente, sigue estos pasos:
 2. Navega al directorio del proyecto:
 
    ```bash
-   cd Reto-Amadeus-Grupo-1
+   cd Front-Reto-Amadeus-Grupo-3
    ```
 
 3. instala las dependecias:
