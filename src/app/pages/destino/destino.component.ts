@@ -10,11 +10,10 @@ import { NgIf } from '@angular/common';
   templateUrl: './destino.component.html',
   styleUrl: './destino.component.css',
 })
-export class DestinoComponent {
+export class DestinoComponent implements OnInit {
   constructor(public destinoService: DestinoService) {}
 
   control: boolean = true;
-
   destinos: any[] = [];
   america: any[] = [];
   europa: any[] = [];
@@ -26,33 +25,49 @@ export class DestinoComponent {
   }
 
   destino() {
-    sessionStorage.getItem('destinoAmerica') === 'Bora Bora'
-      ? (this.control = false)
-      : (this.control = true);
+    if (typeof window !== 'undefined' && window.sessionStorage) {
+      const destinoAmerica = sessionStorage.getItem('destinoAmerica');
+      const destinoEuropa = sessionStorage.getItem('destinoEuropa');
 
-    this.destinoService
-      .getDestinity(
-        `searchName/${sessionStorage.getItem(
-          'destinoAmerica'
-        )}/${sessionStorage.getItem('destinoEuropa')}`
-      )
-      .then((response) => {
-        this.destinos = response;
-        this.filtrarDestinos();
-        console.log(response);
-      })
-      .catch((error) => {
-        console.error('Error', error);
-      });
+      if (destinoAmerica === 'Bora Bora') {
+        this.control = false;
+      } else {
+        this.control = true;
+      }
+
+      if (destinoAmerica && destinoEuropa) {
+        this.destinoService
+          .getDestinationInfo(destinoAmerica, destinoEuropa)
+          .then((response) => {
+            if (Array.isArray(response)) {
+              this.destinos = response;
+              this.filtrarDestinos();
+              console.log(response);
+            } else {
+              console.error('Response is not an array:', response);
+            }
+          })
+          .catch((error) => {
+            console.error('Error', error);
+          });
+      } else {
+        console.error('destinoAmerica or destinoEuropa is null');
+      }
+    } else {
+      console.error('sessionStorage is not available');
+    }
   }
 
   filtrarDestinos(): void {
-    this.america = this.destinos.filter(
-      (destino) => destino.continente === 'América'
-    );
-    this.europa = this.destinos.filter(
-      (destino) =>
-        destino.continente === 'Europa' || destino.continente === 'Asia'
-    );
+    if (Array.isArray(this.destinos)) {
+      this.america = this.destinos.filter(
+        (destino) => destino.continente === 'América'
+      );
+      this.europa = this.destinos.filter(
+        (destino) => destino.continente === 'Europa'
+      );
+    } else {
+      console.error('this.destinos is not an array');
+    }
   }
 }
