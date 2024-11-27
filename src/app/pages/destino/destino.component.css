@@ -32,10 +32,9 @@
   }
 
 .conteiner{
-    height: 80vh;
+    height: 88vh;
     width: 100%;
-    margin-top: 5vh;
-    margin-bottom: 5vh;
+    margin-top: 3vh;
     background-color: #000835;
     display: flex;
     flex-direction: column;
@@ -43,17 +42,38 @@
     gap: 2vh;
 }
 
-.conteiner__titulo {
+.conteiner__titulo{
     display: flex;
+    margin: 0.4rem 0 0 0;
     align-items: center;
     justify-content: center;
     text-align: center;
     color: #ffffff;
 }
 
+.container__title {
+  font-size: 1rem;
+}
+
+.conteiner__title__exotic {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+.conteiner__titulo h3 {
+    margin: -2rem 0 0 0;
+}
+
 .focus-in-expand {
 	-webkit-animation: focus-in-expand 3s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 	        animation: focus-in-expand 3s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+.opcion__encabezado {
+  padding: 1rem 0 0 0;
 }
 
 .opcion__encabezado__destino{
@@ -63,7 +83,7 @@
 .conteiner--opciones{
     display: flex;
     justify-content: space-evenly;
-    height: 75%;
+    height: 72%;
 
 }
 
@@ -103,11 +123,11 @@
 }
 
 .opcion__encabezado{
-  height: 10%;
+  height: 8%;
 }
 
 .opcion__destino{
-  height: 10%;
+  height: 6%;
 }
 
 .opcion__imagen{
@@ -166,9 +186,8 @@
 }
 
 .opcion__link__item img{
-    width: 30px;
+  width: 30px;
 }
-
 
 .opcion__link__item .tooltiptext {
     visibility: hidden;
@@ -200,5 +219,39 @@ input{
     border: none;
     background-color: #000835;
     font-size: 15px;
+}
+
+.container__text {
+  margin: 2vh 0 -1vh 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10%;
+}
+
+.container__text p {
+  color: white;
+}
+
+.button__reset__container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.button__reset {
+  padding: 10px 20px;
+  background-color: var(--color03);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.button__reset:hover {
+  scale: 1.1;
+  color: black;
+  background-color: var(--color02);
 }
 

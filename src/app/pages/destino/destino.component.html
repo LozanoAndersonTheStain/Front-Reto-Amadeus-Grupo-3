@@ -1,17 +1,23 @@
 <main class="conteiner">
   <h1 class="conteiner__titulo">Tus Destinos:</h1>
 
-  <div [hidden]="control">
-    <h3 class="conteiner__titulo">
+  <div class="conteiner__title__exotic" *ngIf="showExoticMessage">
+    <h3 class="text__title">
       Tus Gustos son bastante exóticos, te sugerimos los siguientes lugares:
     </h3>
   </div>
+
+  <div *ngIf="loading">Cargando...</div>
 
   <div class="conteiner--opciones">
     <section class="opciones--opcion">
       <div class="opcion__encabezado">
         <h2 class="opcion__encabezado__nombre" (click)="destino()">
-          Aventura en América
+          Aventura en
+          <ng-container *ngIf="america[0]?.continente === 'América'; else showAsia">
+            América
+          </ng-container>
+          <ng-template #showAsia> Asia </ng-template>
         </h2>
       </div>
 
@@ -28,7 +34,7 @@
       <div class="opcion__imagen">
         <img
           [src]="america[0]?.img"
-          alt="Destino en America"
+          alt="Destino en América"
           id="imagenAmerica"
         />
         <div class="overlay">
@@ -65,24 +71,22 @@
         </div>
       </div>
 
-      <div class="opcion__link__item">
-        <a routerLink="/planes"
-          ><img src="../../../assets/img/paquete.png" alt=""
-        /></a>
-        <span class="tooltiptext">Explora tus opciones</span>
-      </div>
+      <a [routerLink]="['/planes', america[0]?.nombreDestino]">
+        <div class="opcion__link__item">
+          <img src="../../../assets/img/paquete.png" alt=""/>
+          <span class="tooltiptext">Explora tus opciones</span>
+        </div>
+      </a>
     </section>
 
     <section class="opciones--opcion">
       <div class="opcion__encabezado">
         <h2 class="opcion__encabezado__nombre">
           Aventura en
-          <ng-container
-            *ngIf="europa[0]?.continente === 'Europa'; else showAsia"
-          >
+          <ng-container *ngIf="europa[0]?.continente === 'Europa'; else showOceania">
             Europa
           </ng-container>
-          <ng-template #showAsia> Asia </ng-template>
+          <ng-template #showOceania> Oceanía </ng-template>
         </h2>
       </div>
 
@@ -132,12 +136,12 @@
         </div>
       </div>
 
-      <div class="opcion__link__item">
-        <a routerLink="/planes"
-          ><img src="../../../assets/img/paquete.png" alt=""
-        /></a>
-        <span class="tooltiptext">Explora tus opciones</span>
-      </div>
+      <a [routerLink]="['/planes', europa[0]?.nombreDestino]">
+        <div class="opcion__link__item">
+          <img src="../../../assets/img/paquete.png" alt=""/>
+          <span class="tooltiptext">Explora tus opciones</span>
+        </div>
+      </a>
     </section>
   </div>
 </main>

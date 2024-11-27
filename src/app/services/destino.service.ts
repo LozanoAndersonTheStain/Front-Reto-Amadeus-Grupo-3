@@ -7,7 +7,10 @@ import axios from 'axios';
 export class DestinoService {
   private apiUrl = 'http://localhost:8080/api/destination';
 
-  async getDestinationInfo(destination1: string, destination2: string): Promise<any> {
+  async getDestinationInfo(
+    destination1: string,
+    destination2: string
+  ): Promise<any> {
     try {
       const response = await axios.get(`${this.apiUrl}/getByName`, {
         params: { destination1, destination2 },
@@ -21,7 +24,10 @@ export class DestinoService {
 
   async enviarDestino(destinoRequest: any): Promise<any> {
     try {
-      const response = await axios.post(`${this.apiUrl}/sedDestination`, destinoRequest);
+      const response = await axios.post(
+        `${this.apiUrl}/sedDestination`,
+        destinoRequest
+      );
       return response.data;
     } catch (error) {
       console.error('Error sending destination:', error);
