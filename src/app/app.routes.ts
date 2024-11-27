@@ -14,7 +14,7 @@ export const routes: Routes = [
   { path: 'index', component: IndexComponent },
   { path: 'destino', component: DestinoComponent },
   { path: 'perfil', component: PerfilComponent },
-  { path: 'planes', component: PlanesComponent },
+  { path: 'planes/:destination', component: PlanesComponent },
   { path: 'resultados', component: ResultadosComponent },
   { path: 'tarjetas', component: TarjetasComponent },
   { path: 'planes', component: PlanesComponent },

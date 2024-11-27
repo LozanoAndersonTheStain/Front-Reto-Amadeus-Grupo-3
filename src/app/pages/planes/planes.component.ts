@@ -1,19 +1,33 @@
-import { Component } from '@angular/core';
-import { DestinoService } from '@services/destino.service';
-import { RouterLink } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule, ActivatedRoute } from '@angular/router';
+import { PlanService } from '@services/plan.service';
 
 @Component({
   selector: 'app-planes',
-  standalone: true,
-  imports: [RouterLink],
   templateUrl: './planes.component.html',
-  styleUrl: './planes.component.css'
+  styleUrls: ['./planes.component.css'],
+  standalone: true,
+  imports: [CommonModule, RouterModule]
 })
-export class PlanesComponent {
+export class PlanesComponent implements OnInit {
+  plans: any[] = [];
+  destinationName: string = '';
 
-  constructor(public destinoService: DestinoService){}
+  constructor(private planService: PlanService, private route: ActivatedRoute) {}
 
-  destino = this.destinoService.destinationA;
-  srcA = this.destinoService.srcA;
-  srcE = this.destinoService.srcE;
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      this.destinationName = params.get('destination') ?? '';
+      this.loadPlans();
+    });
+  }
+
+  async loadPlans(): Promise<void> {
+    try {
+      this.plans = await this.planService.getPlansByDestination(this.destinationName);
+    } catch (error) {
+      console.error('Error al cargar los planes:', error);
+    }
+  }
 }
