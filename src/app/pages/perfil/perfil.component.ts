@@ -8,16 +8,9 @@ import {
 import { RouterLink } from '@angular/router';
 import { DestinoService } from '@services/destino.service';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import axios from 'axios';
 import { AuthService } from '@services/auth.service';
 import { Router } from '@angular/router';
-
-/**
- * Enumeración de imágenes de avatar para seleccionar una imagen de avatar
- * en el componente PerfilComponent. Esto nos permite seleccionar una imagen
- * de avatar de forma más sencilla y segura. Ademas, si se desea hacer cambios
- * en las imágenes de avatar, solo se debe modificar el enum AvatarImages.
- */
+import { CommonModule, NgIf } from '@angular/common';
 
 enum AvatarImages {
   AVATAR1 = 'assets/img/img-avatar/ava11.png',
@@ -29,20 +22,19 @@ enum AvatarImages {
 @Component({
   selector: 'app-perfil',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule],
+  imports: [RouterLink, ReactiveFormsModule, CommonModule, NgIf],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.css'
 })
 export class PerfilComponent implements AfterViewInit {
-  // Seleccionar elementos del DOM con @ViewChildren para evitar manipulación directa del DOM
   @ViewChildren('slidesElements') slidesElements!: QueryList<ElementRef>;
   @ViewChildren('dotElement') dotElemets!: QueryList<ElementRef>;
 
   constructor(public destinoService: DestinoService, private authService: AuthService, private router: Router) {}
 
   slideIndex: number = 1;
+  showCreateAccountForm: boolean = false;
 
-  // ngAfterViewInit se ejecuta después de que Angular haya inicializado las vistas del componente
   ngAfterViewInit(): void {
     this.showSlides(this.slideIndex);
   }
@@ -56,12 +48,12 @@ export class PerfilComponent implements AfterViewInit {
   }
 
   showSlides(n: number): void {
-    /**
-     * Convertir QueryList en un array para poder iterar sobre cada elemento del DOM,
-     * en este caso los slides y los dots.
-     */
-    const slides = this.slidesElements.toArray();
-    const dots = this.dotElemets.toArray();
+    const slides = this.slidesElements?.toArray();
+    const dots = this.dotElemets?.toArray();
+
+    if (!slides || !dots) {
+      return;
+    }
 
     if (n > slides.length) {
       this.slideIndex = 1;
@@ -87,11 +79,12 @@ export class PerfilComponent implements AfterViewInit {
 
   nombre = new FormControl();
   correo = new FormControl();
+  birthdate = new FormControl();
 
   async datosUsuario() {
+    console.log('Authenticating user with name:', this.nombre.value, 'and email:', this.correo.value);
     const isAuthenticated = await this.authService.authenticateUser(this.nombre.value, this.correo.value);
     if (isAuthenticated) {
-      // Proceed with the rest of the logic
       this.destinoService.nombreS = this.nombre.value;
       this.destinoService.correoS = this.correo.value;
 
@@ -114,7 +107,6 @@ export class PerfilComponent implements AfterViewInit {
         }
       }
 
-      // Navigate to the next page
       this.router.navigate(['/tarjetas']);
     } else {
       console.error('User authentication failed');
@@ -122,31 +114,49 @@ export class PerfilComponent implements AfterViewInit {
     }
   }
 
+  async crearCuenta() {
+    const birthdateValue = this.birthdate.value;
+    const birthdateRegex = /^\d{4}-\d{2}-\d{2}$/;
+
+    if (!birthdateRegex.test(birthdateValue)) {
+      alert('El formato de la fecha de nacimiento es incorrecto. Debe ser YYYY-MM-DD.');
+      return;
+    }
+
+    const isCreated = await this.authService.createUser(this.nombre.value, this.correo.value, birthdateValue);
+    if (isCreated) {
+      alert('Cuenta creada exitosamente. Por favor, inicia sesión.');
+      this.toggleCreateAccountForm();
+    } else {
+      console.error('User creation failed');
+      alert('La creación de la cuenta falló. Por favor, inténtalo de nuevo.');
+    }
+  }
+
   estadoCorreo = "";
   controlBoton = true;
 
   verificarNomb(event: Event){
-
     let nomUsuario = this.nombre.value;
-
     if (nomUsuario == ""){
-      this.estadoCorreo = 'Escribe su nombre';
+      this.estadoCorreo = 'Escriba su nombre';
     }
   }
 
-
   verificarCorreo(event: Event): void {
-
     const regEmail = /^(([^<>()\[\]\.,;:\s@"]+(\.[^<>()\[\]\.,;:\s@"]+)*)|(".+"))@(([^<>()[\]\.,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,})$/i;
+    const validDomains = ['gmail.com', 'hotmail.com', 'yahoo.com', 'outlook.com'];
     const correoUsuario = this.correo.value;
-
+    const domain = correoUsuario.split('@')[1];
     const checkbox = document.getElementById('data-accepted') as HTMLInputElement;
 
-    if (!regEmail.test(correoUsuario) || !checkbox.checked) {
+    if (!regEmail.test(correoUsuario) || !checkbox.checked || !validDomains.includes(domain)) {
       if (!regEmail.test(correoUsuario)) {
         this.estadoCorreo = 'Correo no válido';
       } else if (!checkbox.checked) {
         this.estadoCorreo = 'Debe aceptar los términos y condiciones';
+      } else if (!validDomains.includes(domain)) {
+        this.estadoCorreo = 'El dominio del correo no es válido';
       }
       this.controlBoton = true;
     } else {
@@ -154,10 +164,12 @@ export class PerfilComponent implements AfterViewInit {
       this.controlBoton = false;
     }
 
-    // Ensure the checkbox value is updated correctly
     checkbox.addEventListener('change', () => {
       this.verificarCorreo(event);
     });
   }
 
+  toggleCreateAccountForm(): void {
+    this.showCreateAccountForm = !this.showCreateAccountForm;
+  }
 }

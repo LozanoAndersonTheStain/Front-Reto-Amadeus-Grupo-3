@@ -6,14 +6,13 @@
     font-family: sans-serif;
 }
 
-
 .container__main__card{
     display: grid;
 
     grid-template-columns: 400px 400px;
     grid-template-rows: 400px 48px;
 
-    grid-template-areas: 
+    grid-template-areas:
     'gridAvatar gridData'
     'gridSelect gridData';
 }
@@ -28,8 +27,8 @@
 
         grid-template-columns: 400px;
         grid-template-rows: 400px 48px auto;
-        
-        grid-template-areas: 
+
+        grid-template-areas:
         'gridAvatar'
         'gridSelect'
         'gridData';
@@ -61,28 +60,29 @@
 
 /*  Slideshow container  */
 .container__main__card__avatar {
-    display: inline-block;
-    height: 100%;
+    position: relative;
     width: 100%;
-    /* justify-content: center; */
-    /* margin: auto; */
+    max-width: 400px;
+    height: 320px;
+    margin: 2rem 0 0 0;
+    overflow: hidden;
 }
 
 /*  Hide the images by default  */
 .container__main__card__avatar--img {
+    position: absolute;
     height: 100%;
     width: 100%;
-    object-fit: contain;
-    padding: 1rem;
+}
 
-    & img {
-        height: 100%;
-        width: 100%;
-        object-fit: contain;
-        border-radius: 50%;
-        overflow: hidden;
-        
-    }
+.container__main__card__avatar--img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.container__main__card__avatar--img.fade {
+  display: block;
 }
 
 .container__main__card__select {
@@ -172,8 +172,8 @@
     height: 100%;
     gap: 1.5rem;
     padding: 1rem;
+    padding-bottom: 0;
     justify-content: center;
-    /* justify-content: space-evenly; */
 }
 
 .container__main__card__data--input {
@@ -215,7 +215,7 @@
     padding: 0rem 0.5rem;
     /* font-size: larger; */
     text-align: center;
-    
+
 
     &:hover {
         background-color: var(--colorButtonHover-dark);
@@ -265,7 +265,7 @@
     &:active {
         background-color: var(--colorButtonActive-dark);
     }
-} 
+}
 
 .buttonBG--light {
     border-style: none;
@@ -282,12 +282,41 @@
     &:active {
         background-color: var(--colorButtonActive-light);
     }
-} 
+}
 /*  --- FIN --- Estilos Button  */
 
-/*  --- INICIO --- @keyframe  */
+/*  --- INICIO --- Estilos Created Account  */
 
-/*  --- FIN ---  @keyframe  */
+.container__main__card__data--register {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    justify-content: center;
+    align-items: center;
+}
 
+.container__main__card__data--register--title{
+  display: flex;
+  justify-content: center;
+  color: white;
+}
 
+.container__main__card__data--register--button {
+    background-color: var(--colorButtonBG-dark);
+    border: none;
+    font-size: 1rem;
+    color: var(--colorButtonFont-dark);
+    height: 2rem;
+    width: 60%;
+    text-align: center;
+    cursor: pointer;
+}
+
+.container__main__card__data--register--button:hover {
+    background-color: var(--colorButtonHover-dark);
+    scale: 1.1;
+    transition: 0.5s;
+}
+
+/*  --- FIN --- Estilos Created Account  */
 
