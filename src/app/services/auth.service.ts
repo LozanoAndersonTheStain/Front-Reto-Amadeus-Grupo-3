@@ -19,7 +19,7 @@ export class AuthService {
           sessionStorage.setItem('name', response.data.name);
           sessionStorage.setItem('email', response.data.email);
           sessionStorage.setItem('birthdate', response.data.birthdate);
-          sessionStorage.setItem('name', response.data.role.toLowerCase());
+          sessionStorage.setItem('userRole', response.data.role.toLowerCase());
         } else {
           console.warn('sessionStorage is not available');
         }

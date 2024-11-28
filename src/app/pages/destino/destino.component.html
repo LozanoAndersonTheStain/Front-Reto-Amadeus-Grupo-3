@@ -7,9 +7,7 @@
     </h3>
   </div>
 
-  <div *ngIf="loading">Cargando...</div>
-
-  <div class="conteiner--opciones">
+  <div class="conteiner--opciones" *ngIf="!loading">
     <section class="opciones--opcion">
       <div class="opcion__encabezado">
         <h2 class="opcion__encabezado__nombre" (click)="destino()">
@@ -33,10 +31,30 @@
 
       <div class="opcion__imagen">
         <img
+          *ngIf="america[0]?.img; else loadingImages"
           [src]="america[0]?.img"
           alt="Destino en América"
           id="imagenAmerica"
         />
+        <!-- Loading -->
+        <ng-template #loadingImages>
+            <div id="wifi-loader">
+                <svg class="circle-outer" viewBox="0 0 86 86">
+                    <circle class="back" cx="43" cy="43" r="40"></circle>
+                    <circle class="front" cx="43" cy="43" r="40"></circle>
+                    <circle class="new" cx="43" cy="43" r="40"></circle>
+                </svg>
+                <svg class="circle-middle" viewBox="0 0 60 60">
+                    <circle class="back" cx="30" cy="30" r="27"></circle>
+                    <circle class="front" cx="30" cy="30" r="27"></circle>
+                </svg>
+                <svg class="circle-inner" viewBox="0 0 34 34">
+                    <circle class="back" cx="17" cy="17" r="14"></circle>
+                    <circle class="front" cx="17" cy="17" r="14"></circle>
+                </svg>
+                <div class="text" data-text="Searching"></div>
+            </div>
+        </ng-template>
         <div class="overlay">
           <div class="text">
             <p>Pais:</p>
@@ -101,7 +119,31 @@
       </div>
 
       <div class="opcion__imagen">
-        <img [src]="europa[0]?.img" alt="Destino en Europa" id="imagenEuropa" />
+        <img
+          *ngIf="europa[0]?.img; else loadingImages"
+          [src]="europa[0]?.img"
+          alt="Destino en Europa"
+          id="imagenEuropa"
+        />
+        <!-- Loading -->
+        <ng-template #loadingImages>
+            <div id="wifi-loader">
+                <svg class="circle-outer" viewBox="0 0 86 86">
+                    <circle class="back" cx="43" cy="43" r="40"></circle>
+                    <circle class="front" cx="43" cy="43" r="40"></circle>
+                    <circle class="new" cx="43" cy="43" r="40"></circle>
+                </svg>
+                <svg class="circle-middle" viewBox="0 0 60 60">
+                    <circle class="back" cx="30" cy="30" r="27"></circle>
+                    <circle class="front" cx="30" cy="30" r="27"></circle>
+                </svg>
+                <svg class="circle-inner" viewBox="0 0 34 34">
+                    <circle class="back" cx="17" cy="17" r="14"></circle>
+                    <circle class="front" cx="17" cy="17" r="14"></circle>
+                </svg>
+                <div class="text" data-text="Searching"></div>
+            </div>
+        </ng-template>
         <div class="overlay">
           <div class="text">
             <p>Pais:</p>
@@ -143,5 +185,14 @@
         </div>
       </a>
     </section>
+  </div>
+
+  <div class="container_button">
+    <div class="container__text">
+      <p class="text__title">¿Quieres cambiar tus preferencias?</p>
+    </div>
+    <div class="button__reset__container">
+      <button class="button__reset" (click)="resetForm()">Reset Form</button>
+    </div>
   </div>
 </main>

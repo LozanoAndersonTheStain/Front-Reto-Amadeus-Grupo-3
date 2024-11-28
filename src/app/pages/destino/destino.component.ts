@@ -1,12 +1,12 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { DestinoService } from '@services/destino.service';
-import { Router, RouterModule } from '@angular/router'; // Importar RouterModule
+import { Router, RouterModule } from '@angular/router';
 import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-destino',
   standalone: true,
-  imports: [NgIf, RouterModule], // Asegúrate de importar RouterModule aquí
+  imports: [NgIf, RouterModule],
   templateUrl: './destino.component.html',
   styleUrls: ['./destino.component.css'],
 })
@@ -23,6 +23,9 @@ export class DestinoComponent implements OnInit {
   europa: any[] = [];
   loading: boolean = true;
   showExoticMessage: boolean = false;
+  loadingImages: boolean = true;
+  maxAttempts: number = 3
+  attempts: number = 0
 
   ngOnInit(): void {
     setTimeout(() => {
@@ -50,14 +53,23 @@ export class DestinoComponent implements OnInit {
 
       try {
         const response = await this.destinoService.getDestinationInfo(destinoAmerica, destinoEuropa);
-        console.log('Response:', response); // Verificar los datos recibidos
+        console.log('Response:', response);
         if (Array.isArray(response) && response.length > 0) {
           this.destinos = response;
         }
         this.filtrarDestinos();
         this.loading = false;
         this.cdr.detectChanges();
-        console.log('Destinos:', this.destinos); // Verificar los destinos procesados
+
+        setTimeout(() => {
+          if ((!this.america[0]?.img || !this.europa[0]?.img) && this.attempts < this.maxAttempts) {
+            this.attempts++;
+            this.destino();
+          } else {
+            this.loadingImages = false;
+            this.cdr.detectChanges();
+          }
+        }, 3000);
       } catch (error) {
         console.error('Error', error);
         this.filtrarDestinos();

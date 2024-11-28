@@ -18,7 +18,7 @@ export class MenuNavegacionComponent implements OnInit {
 
   ngOnInit(): void {
     if (typeof sessionStorage !== 'undefined') {
-      const userRole = sessionStorage.getItem('name');
+      const userRole = sessionStorage.getItem('userRole');
       this.isAdmin = userRole === 'admin';
     } else {
       console.log('sessionStorage is not available');
@@ -27,5 +27,6 @@ export class MenuNavegacionComponent implements OnInit {
 
   resetSessionStorage(): void {
     sessionStorage.clear();
+    localStorage.clear(); // Limpiar también el localStorage
   }
 }

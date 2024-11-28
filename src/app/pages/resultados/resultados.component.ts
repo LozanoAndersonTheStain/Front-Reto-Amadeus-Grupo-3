@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
 import { DestinoService } from '@services/destino.service';
 import { ReportsService } from '@services/reports.service';
-import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router'; // Importar Router
 
 @Component({
   selector: 'app-resultados',
   standalone: true,
-  imports: [RouterLink],
   templateUrl: './resultados.component.html',
-  styleUrl: './resultados.component.css',
+  styleUrls: ['./resultados.component.css'],
 })
 export class ResultadosComponent {
   constructor(
     public destinoService: DestinoService,
-    private reportsService: ReportsService
+    private reportsService: ReportsService,
+    private router: Router // Inyectar Router
   ) {}
 
   destinationAmerica = '';
@@ -86,6 +86,8 @@ export class ResultadosComponent {
       console.log('Sending ReportsRequest:', reportData); // Log the request data
       const createdReport = await this.reportsService.createReport(reportData);
       console.log('Reporte creado:', createdReport);
+
+      this.router.navigate(['/destino']);
     } catch (error) {
       console.error('Error al enviar destino o crear reporte:', error);
     }

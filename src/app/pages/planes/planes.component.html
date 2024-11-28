@@ -1,20 +1,25 @@
-<body class="container">
+<body class="container_section">
   <div class="container" *ngFor="let plan of plans">
     <div class="conteiner__encabezado">
       <div class="opcion__link__item">
-        <a routerLink="/destino"><i class="fa-solid fa-arrow-left"></i></a>
+        <a routerLink="/destino">
+          <svg class="opcion__link__item__icon"  width="48"  height="48"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round" ><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l14 0" /><path d="M5 12l4 4" /><path d="M5 12l4 -4" /></svg>
+        </a>
         <span class="tooltiptext">Volver a tus destino</span>
       </div>
 
       <h1 class="conteiner__encabezado__titulo">Destino seleccionado:</h1>
       <div class="conteiner__encabezado__imagen">
         <img [src]="plan.imageUrl" alt="{{ plan.name }}">
+        <div class="container__descriontion__destination">
+          <p>{{ plan.description }}</p>
+        </div>
       </div>
       <h2 class="conteiner__encabezado__nombre">{{ plan.destinationName }}</h2>
     </div>
 
     <div class="container__hospedaje">
-      <h2>Tus opciones de hospedaje:</h2>
+      <h2 class="container__hospedaje__titulo">Tus opciones de hospedaje:</h2>
       <div>
         <p>Estas son las opciones de hospedaje que te recomendamos según tus preferencias:</p>
       </div>
