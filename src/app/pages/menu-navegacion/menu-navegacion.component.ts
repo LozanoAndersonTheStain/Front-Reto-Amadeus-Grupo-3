@@ -21,7 +21,7 @@ export class MenuNavegacionComponent implements OnInit {
       const userRole = sessionStorage.getItem('userRole');
       this.isAdmin = userRole === 'admin';
     } else {
-      console.log('sessionStorage is not available');
+      console.log('sessionStorage no está disponible');
     }
   }
 

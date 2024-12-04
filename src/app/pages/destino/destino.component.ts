@@ -41,7 +41,7 @@ export class DestinoComponent implements OnInit {
       const destinoEuropa = sessionStorage.getItem('destinoEuropa');
 
       if (!destinoAmerica || !destinoEuropa) {
-        console.error('destinoAmerica or destinoEuropa is null');
+        console.error('destinoAmerica o destinoEuropa son nulos');
         this.loading = false;
         this.cdr.detectChanges();
         return;
@@ -104,9 +104,9 @@ export class DestinoComponent implements OnInit {
       console.log('Europa:', this.europa);
       console.log('Asia:', this.asia);
       console.log('Oceanía:', this.oceania);
-      console.log('Show Exotic Message:', this.showExoticMessage);
+      console.log('Mostrar mensaje exótico:', this.showExoticMessage);
     } else {
-      console.error('this.destinos is not an array');
+      console.error('this.destinos no es un array');
     }
   }
 

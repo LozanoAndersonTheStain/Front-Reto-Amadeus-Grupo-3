@@ -17,7 +17,7 @@ export class DestinoService {
       });
       return response.data;
     } catch (error) {
-      console.error('Error fetching destination info:', error);
+      console.error('Error al obtener la información de destino:', error);
       throw error;
     }
   }
@@ -30,7 +30,7 @@ export class DestinoService {
       );
       return response.data;
     } catch (error) {
-      console.error('Error sending destination:', error);
+      console.error('Error al enviar destino:', error);
       throw error;
     }
   }

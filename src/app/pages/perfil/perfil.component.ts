@@ -82,7 +82,7 @@ export class PerfilComponent implements AfterViewInit {
   birthdate = new FormControl();
 
   async datosUsuario() {
-    console.log('Authenticating user with name:', this.nombre.value, 'and email:', this.correo.value);
+    console.log('Autenticación de usuario con nombre:', this.nombre.value, 'y email:', this.correo.value);
     const isAuthenticated = await this.authService.authenticateUser(this.nombre.value, this.correo.value);
     if (isAuthenticated) {
       this.destinoService.nombreS = this.nombre.value;
@@ -109,8 +109,8 @@ export class PerfilComponent implements AfterViewInit {
 
       this.router.navigate(['/tarjetas']);
     } else {
-      console.error('User authentication failed');
-      alert('User authentication failed. Please check your credentials and try again.');
+      console.error('Error de autenticación de usuario');
+      alert('Ha fallado la autenticación de usuario. Compruebe sus credenciales e inténtelo de nuevo.');
     }
   }
 
@@ -128,7 +128,7 @@ export class PerfilComponent implements AfterViewInit {
       alert('Cuenta creada exitosamente. Por favor, inicia sesión.');
       this.toggleCreateAccountForm();
     } else {
-      console.error('User creation failed');
+      console.error('Error en la creación de usuario');
       alert('La creación de la cuenta falló. Por favor, inténtalo de nuevo.');
     }
   }
