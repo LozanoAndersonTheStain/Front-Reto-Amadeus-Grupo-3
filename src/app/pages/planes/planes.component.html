@@ -15,7 +15,24 @@
           <p>{{ plan.description }}</p>
         </div>
       </div>
-      <h2 class="conteiner__encabezado__nombre">{{ plan.destinationName }}</h2>
+      <div>
+        <p>Te gustaron las recomendaciones de <span>{{ plan.destinationName }}</span>, podemos enviarte la información a tu correo:</p>
+        <div class="container__button__correo">
+          <button (click)="sendDestinationInfo(plan)" class="bt" id="bt">
+            <span class="msg" id="msg"></span>
+            <ng-container *ngIf="isLoading; else notLoading">
+              <div class="loader">
+                <li class="ball"></li>
+                <li class="ball"></li>
+                <li class="ball"></li>
+              </div>
+            </ng-container>
+            <ng-template #notLoading>
+              <span>{{ message || 'Clic para enviar a tu correo' }}</span>
+            </ng-template>
+          </button>
+        </div>
+      </div>
     </div>
 
     <div class="container__hospedaje">

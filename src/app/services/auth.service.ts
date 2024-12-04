@@ -8,7 +8,7 @@ export class AuthService {
   private apiUrl = 'http://localhost:8080/api/user';
 
   async authenticateUser(name: string, email: string): Promise<boolean> {
-    console.log('Authenticating user with name:', name, 'and email:', email);
+    console.log('Autenticando usuario con nombre:', name, 'y email:', email);
     try {
       const response = await axios.post(`${this.apiUrl}/authenticate`, null, {
         params: { name, email },
@@ -21,7 +21,7 @@ export class AuthService {
           sessionStorage.setItem('birthdate', response.data.birthdate);
           sessionStorage.setItem('userRole', response.data.role.toLowerCase());
         } else {
-          console.warn('sessionStorage is not available');
+          console.warn('sessionStorage no está disponible');
         }
         return true;
       } else {
@@ -30,12 +30,12 @@ export class AuthService {
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response && error.response.status === 401) {
-          console.error('User not found or credentials are incorrect');
+          console.error('Usuario no encontrado o credenciales incorrectas');
         } else {
-          console.error('Authentication failed', error);
+          console.error('Autenticación fallida', error);
         }
       } else {
-        console.error('An unexpected error occurred', error);
+        console.error('Se ha producido un error inesperado', error);
       }
       return false;
     }
@@ -47,11 +47,11 @@ export class AuthService {
     birthdate: string
   ): Promise<boolean> {
     console.log(
-      'Creating user with name:',
+      'Creando usuario con nombre:',
       name,
       'email:',
       email,
-      'and birthdate:',
+      'y cumpleaños:',
       birthdate
     );
     try {
@@ -64,20 +64,29 @@ export class AuthService {
       if (response.status === 201) {
         return true;
       } else {
-        console.error('User creation failed');
+        console.error('Error en la creación de usuario');
         return false;
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response && error.response.status === 409) {
-          alert('User already exists: Go and Login');
+          alert('El usuario ya existe: Ir e iniciar sesión');
         } else {
-          console.error('User creation failed', error);
+          console.error('Error en la creación de usuario', error);
         }
       } else {
-        console.error('An unexpected error occurred', error);
+        console.error('Se ha producido un error inesperado', error);
       }
       return false;
+    }
+  }
+
+  async getUserEmail(): Promise<string> {
+    if (typeof sessionStorage !== 'undefined') {
+      return sessionStorage.getItem('email') ?? '';
+    } else {
+      console.warn('sessionStorage no está disponible');
+      return '';
     }
   }
 }

@@ -21,6 +21,8 @@ export class DestinoComponent implements OnInit {
   destinos: any[] = [];
   america: any[] = [];
   europa: any[] = [];
+  asia: any[] = [];
+  oceania: any[] = [];
   loading: boolean = true;
   showExoticMessage: boolean = false;
   loadingImages: boolean = true;
@@ -89,11 +91,19 @@ export class DestinoComponent implements OnInit {
       this.europa = this.destinos.filter(
         (destino) => destino.continente === 'Europa'
       );
+      this.asia = this.destinos.filter(
+        (destino) => destino.continente === 'Asia'
+      );
+      this.oceania = this.destinos.filter(
+        (destino) => destino.continente === 'Oceanía'
+      );
       this.showExoticMessage = this.destinos.some(
         (destino) => destino.continente === 'Oceanía' || destino.continente === 'Asia'
       );
       console.log('América:', this.america);
       console.log('Europa:', this.europa);
+      console.log('Asia:', this.asia);
+      console.log('Oceanía:', this.oceania);
       console.log('Show Exotic Message:', this.showExoticMessage);
     } else {
       console.error('this.destinos is not an array');

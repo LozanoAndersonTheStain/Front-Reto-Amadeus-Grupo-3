@@ -12,7 +12,7 @@
       <div class="opcion__encabezado">
         <h2 class="opcion__encabezado__nombre" (click)="destino()">
           Aventura en
-          <ng-container *ngIf="america[0]?.continente === 'América'; else showAsia">
+          <ng-container *ngIf="america.length > 0; else showAsia">
             América
           </ng-container>
           <ng-template #showAsia> Asia </ng-template>
@@ -21,87 +21,148 @@
 
       <div class="opcion__destino">
         <input
+          *ngIf="america.length > 0; else showAsiaDestino"
           [value]="america[0]?.nombreDestino"
           class="opcion__encabezado__destino focus-in-expand"
           type="text"
           readonly
           id="destinoAmerica"
         />
+        <ng-template #showAsiaDestino>
+          <input
+            [value]="asia[0]?.nombreDestino"
+            class="opcion__encabezado__destino focus-in-expand"
+            type="text"
+            readonly
+            id="destinoAsia"
+          />
+        </ng-template>
       </div>
 
       <div class="opcion__imagen">
         <img
-          *ngIf="america[0]?.img; else loadingImages"
+          *ngIf="america.length > 0; else showAsiaImg"
           [src]="america[0]?.img"
           alt="Destino en América"
           id="imagenAmerica"
         />
+        <ng-template #showAsiaImg>
+          <img
+            [src]="asia[0]?.img"
+            alt="Destino en Asia"
+            id="imagenAsia"
+          />
+        </ng-template>
         <!-- Loading -->
         <ng-template #loadingImages>
-            <div id="wifi-loader">
-                <svg class="circle-outer" viewBox="0 0 86 86">
-                    <circle class="back" cx="43" cy="43" r="40"></circle>
-                    <circle class="front" cx="43" cy="43" r="40"></circle>
-                    <circle class="new" cx="43" cy="43" r="40"></circle>
-                </svg>
-                <svg class="circle-middle" viewBox="0 0 60 60">
-                    <circle class="back" cx="30" cy="30" r="27"></circle>
-                    <circle class="front" cx="30" cy="30" r="27"></circle>
-                </svg>
-                <svg class="circle-inner" viewBox="0 0 34 34">
-                    <circle class="back" cx="17" cy="17" r="14"></circle>
-                    <circle class="front" cx="17" cy="17" r="14"></circle>
-                </svg>
-                <div class="text" data-text="Searching"></div>
-            </div>
+          <div id="wifi-loader">
+            <svg class="circle-outer" viewBox="0 0 86 86">
+              <circle class="back" cx="43" cy="43" r="40"></circle>
+              <circle class="front" cx="43" cy="43" r="40"></circle>
+              <circle class="new" cx="43" cy="43" r="40"></circle>
+            </svg>
+            <svg class="circle-middle" viewBox="0 0 60 60">
+              <circle class="back" cx="30" cy="30" r="27"></circle>
+              <circle class="front" cx="30" cy="30" r="27"></circle>
+            </svg>
+            <svg class="circle-inner" viewBox="0 0 34 34">
+              <circle class="back" cx="17" cy="17" r="14"></circle>
+              <circle class="front" cx="17" cy="17" r="14"></circle>
+            </svg>
+            <div class="text" data-text="Searching"></div>
+          </div>
         </ng-template>
         <div class="overlay">
           <div class="text">
             <p>Pais:</p>
             <input
+              *ngIf="america.length > 0; else showAsiaPais"
               class="text__input"
               type="text"
               [value]="america[0]?.pais"
               readonly
             />
+            <ng-template #showAsiaPais>
+              <input
+                class="text__input"
+                type="text"
+                [value]="asia[0]?.pais"
+                readonly
+              />
+            </ng-template>
             <p>Idioma:</p>
             <input
+              *ngIf="america.length > 0; else showAsiaIdioma"
               class="text__input"
               type="text"
               [value]="america[0]?.idioma"
               readonly
             />
+            <ng-template #showAsiaIdioma>
+              <input
+                class="text__input"
+                type="text"
+                [value]="asia[0]?.idioma"
+                readonly
+              />
+            </ng-template>
             <p>Lugar Imperdible:</p>
             <input
+              *ngIf="america.length > 0; else showAsiaLugar"
               class="text__input"
               type="text"
               [value]="america[0]?.lugarImperdible"
               readonly
             />
+            <ng-template #showAsiaLugar>
+              <input
+                class="text__input"
+                type="text"
+                [value]="asia[0]?.lugarImperdible"
+                readonly
+              />
+            </ng-template>
             <p>Comida típica:</p>
             <input
+              *ngIf="america.length > 0; else showAsiaComida"
               class="text__input"
               type="text"
               [value]="america[0]?.comidaTipica"
               readonly
             />
+            <ng-template #showAsiaComida>
+              <input
+                class="text__input"
+                type="text"
+                [value]="asia[0]?.comidaTipica"
+                readonly
+              />
+            </ng-template>
           </div>
         </div>
       </div>
 
-      <a [routerLink]="['/planes', america[0]?.nombreDestino]">
+      <a *ngIf="america.length > 0; else showAsiaLink" [routerLink]="['/planes', america[0]?.nombreDestino]">
         <div class="opcion__link__item">
           <img src="../../../assets/img/paquete.png" alt=""/>
           <span class="tooltiptext">Explora tus opciones</span>
         </div>
       </a>
+      <ng-template #showAsiaLink>
+        <a [routerLink]="['/planes', asia[0]?.nombreDestino]">
+          <div class="opcion__link__item">
+            <img src="../../../assets/img/paquete.png" alt=""/>
+            <span class="tooltiptext">Explora tus opciones</span>
+          </div>
+        </a>
+      </ng-template>
     </section>
 
     <section class="opciones--opcion">
       <div class="opcion__encabezado">
         <h2 class="opcion__encabezado__nombre">
           Aventura en
-          <ng-container *ngIf="europa[0]?.continente === 'Europa'; else showOceania">
+          <ng-container *ngIf="europa.length > 0; else showOceania">
             Europa
           </ng-container>
           <ng-template #showOceania> Oceanía </ng-template>
@@ -110,80 +171,141 @@
 
       <div class="opcion__destino">
         <input
+          *ngIf="europa.length > 0; else showOceaniaDestino"
           [value]="europa[0]?.nombreDestino"
           class="opcion__encabezado__destino focus-in-expand"
           type="text"
           readonly
           id="destinoEuropa"
         />
+        <ng-template #showOceaniaDestino>
+          <input
+            [value]="oceania[0]?.nombreDestino"
+            class="opcion__encabezado__destino focus-in-expand"
+            type="text"
+            readonly
+            id="destinoOceania"
+          />
+        </ng-template>
       </div>
 
       <div class="opcion__imagen">
         <img
-          *ngIf="europa[0]?.img; else loadingImages"
+          *ngIf="europa.length > 0; else showOceaniaImg"
           [src]="europa[0]?.img"
           alt="Destino en Europa"
           id="imagenEuropa"
         />
+        <ng-template #showOceaniaImg>
+          <img
+            [src]="oceania[0]?.img"
+            alt="Destino en Oceanía"
+            id="imagenOceania"
+          />
+        </ng-template>
         <!-- Loading -->
         <ng-template #loadingImages>
-            <div id="wifi-loader">
-                <svg class="circle-outer" viewBox="0 0 86 86">
-                    <circle class="back" cx="43" cy="43" r="40"></circle>
-                    <circle class="front" cx="43" cy="43" r="40"></circle>
-                    <circle class="new" cx="43" cy="43" r="40"></circle>
-                </svg>
-                <svg class="circle-middle" viewBox="0 0 60 60">
-                    <circle class="back" cx="30" cy="30" r="27"></circle>
-                    <circle class="front" cx="30" cy="30" r="27"></circle>
-                </svg>
-                <svg class="circle-inner" viewBox="0 0 34 34">
-                    <circle class="back" cx="17" cy="17" r="14"></circle>
-                    <circle class="front" cx="17" cy="17" r="14"></circle>
-                </svg>
-                <div class="text" data-text="Searching"></div>
-            </div>
+          <div id="wifi-loader">
+            <svg class="circle-outer" viewBox="0 0 86 86">
+              <circle class="back" cx="43" cy="43" r="40"></circle>
+              <circle class="front" cx="43" cy="43" r="40"></circle>
+              <circle class="new" cx="43" cy="43" r="40"></circle>
+            </svg>
+            <svg class="circle-middle" viewBox="0 0 60 60">
+              <circle class="back" cx="30" cy="30" r="27"></circle>
+              <circle class="front" cx="30" cy="30" r="27"></circle>
+            </svg>
+            <svg class="circle-inner" viewBox="0 0 34 34">
+              <circle class="back" cx="17" cy="17" r="14"></circle>
+              <circle class="front" cx="17" cy="17" r="14"></circle>
+            </svg>
+            <div class="text" data-text="Searching"></div>
+          </div>
         </ng-template>
         <div class="overlay">
           <div class="text">
             <p>Pais:</p>
             <input
+              *ngIf="europa.length > 0; else showOceaniaPais"
               class="text__input"
               type="text"
               [value]="europa[0]?.pais"
               readonly
             />
+            <ng-template #showOceaniaPais>
+              <input
+                class="text__input"
+                type="text"
+                [value]="oceania[0]?.pais"
+                readonly
+              />
+            </ng-template>
             <p>Idioma:</p>
             <input
+              *ngIf="europa.length > 0; else showOceaniaIdioma"
               class="text__input"
               type="text"
               [value]="europa[0]?.idioma"
               readonly
             />
+            <ng-template #showOceaniaIdioma>
+              <input
+                class="text__input"
+                type="text"
+                [value]="oceania[0]?.idioma"
+                readonly
+              />
+            </ng-template>
             <p>Lugar Imperdible:</p>
             <input
+              *ngIf="europa.length > 0; else showOceaniaLugar"
               class="text__input"
               type="text"
               [value]="europa[0]?.lugarImperdible"
               readonly
             />
+            <ng-template #showOceaniaLugar>
+              <input
+                class="text__input"
+                type="text"
+                [value]="oceania[0]?.lugarImperdible"
+                readonly
+              />
+            </ng-template>
             <p>Comida típica:</p>
             <input
+              *ngIf="europa.length > 0; else showOceaniaComida"
               class="text__input"
               type="text"
               [value]="europa[0]?.comidaTipica"
               readonly
             />
+            <ng-template #showOceaniaComida>
+              <input
+                class="text__input"
+                type="text"
+                [value]="oceania[0]?.comidaTipica"
+                readonly
+              />
+            </ng-template>
           </div>
         </div>
       </div>
 
-      <a [routerLink]="['/planes', europa[0]?.nombreDestino]">
+      <a *ngIf="europa.length > 0; else showOceaniaLink" [routerLink]="['/planes', europa[0]?.nombreDestino]">
         <div class="opcion__link__item">
           <img src="../../../assets/img/paquete.png" alt=""/>
           <span class="tooltiptext">Explora tus opciones</span>
         </div>
       </a>
+      <ng-template #showOceaniaLink>
+        <a [routerLink]="['/planes', oceania[0]?.nombreDestino]">
+          <div class="opcion__link__item">
+            <img src="../../../assets/img/paquete.png" alt=""/>
+            <span class="tooltiptext">Explora tus opciones</span>
+          </div>
+        </a>
+      </ng-template>
     </section>
   </div>
 

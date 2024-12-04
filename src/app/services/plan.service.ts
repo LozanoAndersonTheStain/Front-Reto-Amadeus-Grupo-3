@@ -16,7 +16,16 @@ export class PlanService {
       });
       return response.data;
     } catch (error) {
-      console.error('Error fetching plans by destination:', error);
+      console.error('Error al buscar planes por destino:', error);
+      throw error;
+    }
+  }
+
+  async sendDestinationInfoByEmail(destinationName: string, userEmail: string, plan: any): Promise<void> {
+    try {
+      await axios.post(`${this.apiUrl}/sendDestinationInfoByEmail`, { destinationName, email: userEmail, plan });
+    } catch (error) {
+      console.error('Error al enviar información de destino por correo electrónico:', error);
       throw error;
     }
   }
