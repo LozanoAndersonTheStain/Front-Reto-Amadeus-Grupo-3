@@ -10,22 +10,22 @@
 </div>
 
 <div class="charts-container">
-  <div *ngIf="environmentChart">
+  <div class="chart-item" *ngIf="environmentChart">
     <div [chart]="environmentChart"></div>
   </div>
-  <div *ngIf="climateChart">
+  <div class="chart-item" *ngIf="climateChart">
     <div [chart]="climateChart"></div>
   </div>
-  <div *ngIf="accommodationChart">
+  <div class="chart-item" *ngIf="accommodationChart">
     <div [chart]="accommodationChart"></div>
   </div>
-  <div *ngIf="activityChart">
+  <div class="chart-item" *ngIf="activityChart">
     <div [chart]="activityChart"></div>
   </div>
-  <div *ngIf="stayDurationChart">
+  <div class="chart-item" *ngIf="stayDurationChart">
     <div [chart]="stayDurationChart"></div>
   </div>
-  <div *ngIf="ageRangeChart">
+  <div class="chart-item" *ngIf="ageRangeChart">
     <div [chart]="ageRangeChart"></div>
   </div>
 </div>
