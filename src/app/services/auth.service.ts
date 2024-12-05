@@ -18,7 +18,6 @@ export class AuthService {
           sessionStorage.setItem('userId', response.data.id);
           sessionStorage.setItem('name', response.data.name);
           sessionStorage.setItem('email', response.data.email);
-          sessionStorage.setItem('birthdate', response.data.birthdate);
           sessionStorage.setItem('userRole', response.data.role.toLowerCase());
         } else {
           console.warn('sessionStorage no está disponible');
@@ -44,21 +43,17 @@ export class AuthService {
   async createUser(
     name: string,
     email: string,
-    birthdate: string
   ): Promise<boolean> {
     console.log(
       'Creando usuario con nombre:',
       name,
-      'email:',
+      'y email:',
       email,
-      'y cumpleaños:',
-      birthdate
     );
     try {
       const response = await axios.post(`${this.apiUrl}/create`, {
         name,
         email,
-        birthdate,
         role: 'user',
       });
       if (response.status === 201) {

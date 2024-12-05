@@ -77,7 +77,6 @@
       <section class="container__main__card__data">
         <input class="container__main__card__data--input" type="text" placeholder="Nombre" [formControl]="nombre" (keyup)="verificarNomb($event)">
         <input class="container__main__card__data--input" type="email" placeholder="Correo electrónico" [formControl]="correo" (keyup)="verificarCorreo($event)">
-        <input class="container__main__card__data--input" type="date" placeholder="Fecha de Nacimiento" [formControl]="birthdate" pattern="\d{4}-\d{2}-\d{2}">
         <label class="container__main__card__data--alert">{{estadoCorreo}}</label>
 
         <div class="container__main__card__data--personalData">

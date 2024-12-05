@@ -115,15 +115,7 @@ export class PerfilComponent implements AfterViewInit {
   }
 
   async crearCuenta() {
-    const birthdateValue = this.birthdate.value;
-    const birthdateRegex = /^\d{4}-\d{2}-\d{2}$/;
-
-    if (!birthdateRegex.test(birthdateValue)) {
-      alert('El formato de la fecha de nacimiento es incorrecto. Debe ser YYYY-MM-DD.');
-      return;
-    }
-
-    const isCreated = await this.authService.createUser(this.nombre.value, this.correo.value, birthdateValue);
+    const isCreated = await this.authService.createUser(this.nombre.value, this.correo.value);
     if (isCreated) {
       alert('Cuenta creada exitosamente. Por favor, inicia sesión.');
       this.toggleCreateAccountForm();
